@@ -14,13 +14,20 @@
     <div class="home-background" :class="this.$store.state.todayMood"></div>
   </div>
 
-  <AddMood v-if="editModal.isVisible" @close="closeModal">
+  <AddMood
+      v-if="modal.isVisible"
+      modalType="modal.type"
+      @close="closeModal">
     <template v-slot:header>오늘의 기분</template>
     <template v-slot:body>
-      <TodayMoodSelectList :todayMood="todayMood.type" v-model:string="todayMood.type"/>
+      <TodayMoodSelectList
+          v-if="isSelectModal"
+          @confirm="openDiaryForm"/>
+      <div v-if="isDiaryForm">
+        next step modal
+      </div>
     </template>
   </AddMood>
-
 </template>
 
 <script>
@@ -29,8 +36,9 @@ import Calendar from '@/components/Home/Calendar.vue';
 import PreMoodContents from '@/components/Home/PreMoodContents.vue';
 import AfterMoodContents from '@/components/Home/AfterMoodContents.vue';
 import TodayMoodSelectList from '@/components/Modal/TodayMoodSelectList.vue';
+import { mapMutations } from 'vuex';
 
-export default {
+const app = {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Footer',
   components: {
@@ -47,20 +55,40 @@ export default {
         type: '',
         isSave: false,
       },
-      editModal: {
+      modal: {
+        type: '',
         isVisible: false,
       },
     };
   },
+  computed: {
+    isSelectModal() {
+      return this.modal.type === 'moodList';
+    },
+    isDiaryForm() {
+      return this.modal.type === 'diaryForm';
+    },
+  },
   methods: {
+    ...mapMutations(['setTodayMood']),
+    setTodayMood(value) {
+      this.todayMood.type = value;
+    },
+    openDiaryForm() {
+      this.modal.type = 'diaryForm';
+    },
     openModal() {
-      this.editModal.isVisible = true;
+      this.modal.type = 'moodList';
+      this.modal.isVisible = true;
     },
     closeModal() {
-      this.editModal.isVisible = false;
+      this.modal.isVisible = false;
     },
   },
 };
+
+export default app;
+
 </script>
 
 <style lang="scss">
