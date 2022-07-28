@@ -16,7 +16,7 @@
     </label>
   </article>
 
-  <div class="footer" @click="saveMood" data-test="footer-button">다음</div>
+  <div class="footer" @click="saveMood" data-test="footer-button">일기도 쓸래요.</div>
 </template>
 
 <script>

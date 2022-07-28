@@ -18,7 +18,7 @@
       v-if="modal.isVisible"
       modalType="modal.type"
       @close="closeModal">
-    <template v-slot:header>오늘의 기분</template>
+    <template v-slot:header>{{ modalTitle }}</template>
     <template v-slot:body>
       <TodayMoodSelectList
           v-if="isSelectModal"
@@ -67,6 +67,9 @@ const app = {
     },
     isDiaryForm() {
       return this.modal.type === 'diaryForm';
+    },
+    modalTitle() {
+      return this.modal.type ? '오늘의 기분' : '오늘의 기록';
     },
   },
   methods: {
