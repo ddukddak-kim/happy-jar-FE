@@ -3,18 +3,24 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import HomeRoutes from '@/router/HomeRoutes';
 import MoodRoutes from '@/router/MoodListRoutes';
-import App from '@/App.vue';
 
+import App from '@/App.vue';
 import Navigation from '@/components/App/Navigation.vue';
 
 import MenuList from '@/assets/datas/navigationMenu.js';
 
 const routes = [].concat(HomeRoutes, MoodRoutes);
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+const $store = {
+  state: {
+    todayMood: 'happy',
+  },
+  commit: jest.fn(),
+};
 
 describe('Navigation.vue', () => {
   let wrapper;
@@ -59,10 +65,15 @@ describe('Navigation.vue', () => {
 
 describe('App.vue', () => {
   let wrapper;
+
   beforeEach(() => {
+    $store.commit.mockClear();
     wrapper = mount(App, {
       global: {
         plugins: [router],
+        mocks: {
+          $store,
+        },
       },
     });
   });
