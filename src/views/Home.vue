@@ -20,12 +20,11 @@
       @close="closeModal">
     <template v-slot:header>{{ modalTitle }}</template>
     <template v-slot:body>
-      <TodayMoodSelectList
+      <MoodSelectList
           v-if="isSelectModal"
           @confirm="openDiaryForm"/>
-      <div v-if="isDiaryForm">
-        next step modal
-      </div>
+      <DiaryForm
+          v-if="isDiaryForm" />
     </template>
   </AddMood>
 </template>
@@ -35,7 +34,8 @@ import AddMood from '@/components/Modal/Modal.vue';
 import Calendar from '@/components/Home/Calendar.vue';
 import PreMoodContents from '@/components/Home/PreMoodContents.vue';
 import AfterMoodContents from '@/components/Home/AfterMoodContents.vue';
-import TodayMoodSelectList from '@/components/Modal/TodayMoodSelectList.vue';
+import MoodSelectList from '@/components/Modal/MoodSelectList.vue';
+import DiaryForm from '@/components/Modal/DiaryForm.vue';
 import { mapMutations } from 'vuex';
 
 const app = {
@@ -46,7 +46,8 @@ const app = {
     Calendar,
     PreMoodContents,
     AfterMoodContents,
-    TodayMoodSelectList,
+    MoodSelectList,
+    DiaryForm,
   },
   props: {},
   data() {

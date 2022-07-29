@@ -73,7 +73,7 @@ export default {
     }
 
     .body {
-      margin: 20px 0;
+      margin: 85px 0;
     }
   }
 }

@@ -1,7 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils';
 
 import Home from '@/views/Home.vue';
-import TodayMoodSelectList from '../../components/Modal/TodayMoodSelectList';
+import TodayMoodSelectList from '../../components/Modal/MoodSelectList';
 
 const $store = {
   state: {

@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       moods: moodData,
-      todayMood: '',
+      todayMood: 'happy',
     };
   },
   methods: {
@@ -49,7 +49,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 65px 0;
 
   label {
     .today-mood-label {
