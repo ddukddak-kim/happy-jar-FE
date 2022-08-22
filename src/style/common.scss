@@ -1,4 +1,6 @@
-*{
+@import "src/style/color";
+
+* {
   box-sizing: border-box;
 }
 
@@ -16,3 +18,24 @@
   color: $white;
   font-weight: bold;
 }
+
+/* Menu-title Area :: start */
+div.title-wrapper {
+  width: 85%;
+  margin: auto auto 3vh auto;
+  text-align: left;
+}
+div.title-wrapper > .pg-title {
+  margin-bottom: 3.5vh;
+}
+div.title-wrapper > :not(.pg-title) {
+  padding-left: 3.5vw;
+  color: #767676;
+}
+div.title-wrapper:not(.no-line):after {
+  content: "";
+  display: block;
+  border: 1px solid currentColor;
+  margin: 1.5vh auto;
+}
+/* Menu-title Area :: end */
