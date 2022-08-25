@@ -1,10 +1,10 @@
 <template>
-  <article class="today-mood-item-wrapper">
+  <article class="today-mood-item-wrapper" data-test="mood-list">
     <label v-for="mood in moods" :key="mood.id" data-test="today-mood-item">
       <input
           class="today-mood-radio"
           type="radio"
-          v-model="todayMoodType"
+          v-model="todayMood"
           :value="mood.type"
           data-test="today-mood-radio"/>
       <span
@@ -15,31 +15,29 @@
       </span>
     </label>
   </article>
+
+  <div class="footer" @click="saveMood" data-test="footer-button">일기도 쓸래요.</div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapMutations } from 'vuex';
 import moodData from '@/assets/datas/moodData';
 
 export default {
   name: 'MoodList',
-  props: {
-  },
-  computed: {
-    ...mapState(['todayMood']),
-    todayMoodType: {
-      get() {
-        return this.todayMood;
-      },
-      set(value) {
-        this.$store.commit('setTodayMood', value);
-      },
-    },
-  },
   data() {
     return {
       moods: moodData,
+      todayMood: 'happy',
     };
+  },
+  methods: {
+    ...mapMutations(['setTodayMood']),
+    saveMood() {
+      this.$store.commit('setTodayMood', this.todayMood);
+
+      this.$emit('confirm');
+    },
   },
 };
 </script>
@@ -51,7 +49,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 65px 0;
 
   label {
     .today-mood-label {
@@ -99,4 +96,18 @@ export default {
   }
 }
 
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 6vh;
+  background: $black;
+  color: $white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>

@@ -11,13 +11,8 @@
           data-test="modal-close"
           @click="close"/>
       </div>
-
       <div class="body">
         <slot name="body">default body</slot>
-      </div>
-
-      <div class="footer" @click="close">
-        확인
       </div>
     </div>
   </div>
@@ -78,24 +73,8 @@ export default {
     }
 
     .body {
-      margin: 20px 0;
+      margin: 85px 0;
     }
-
-    .footer {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-
-      width: 100%;
-      height: 6vh;
-      background: $black;
-      color: $white;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
   }
 }
 

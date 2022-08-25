@@ -14,13 +14,19 @@
     <div class="home-background" :class="this.$store.state.todayMood"></div>
   </div>
 
-  <AddMood v-if="editModal.isVisible" @close="closeModal">
-    <template v-slot:header>오늘의 기분</template>
+  <AddMood
+      v-if="modal.isVisible"
+      modalType="modal.type"
+      @close="closeModal">
+    <template v-slot:header>{{ modalTitle }}</template>
     <template v-slot:body>
-      <TodayMoodSelectList :todayMood="todayMood.type" v-model:string="todayMood.type"/>
+      <MoodSelectList
+          v-if="isSelectModal"
+          @confirm="openDiaryForm"/>
+      <DiaryForm
+          v-if="isDiaryForm" />
     </template>
   </AddMood>
-
 </template>
 
 <script>
@@ -28,9 +34,11 @@ import AddMood from '@/components/Modal/Modal.vue';
 import Calendar from '@/components/Home/Calendar.vue';
 import PreMoodContents from '@/components/Home/PreMoodContents.vue';
 import AfterMoodContents from '@/components/Home/AfterMoodContents.vue';
-import TodayMoodSelectList from '@/components/Modal/TodayMoodSelectList.vue';
+import MoodSelectList from '@/components/Modal/MoodSelectList.vue';
+import DiaryForm from '@/components/Modal/DiaryForm.vue';
+import { mapMutations } from 'vuex';
 
-export default {
+const app = {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Footer',
   components: {
@@ -38,7 +46,8 @@ export default {
     Calendar,
     PreMoodContents,
     AfterMoodContents,
-    TodayMoodSelectList,
+    MoodSelectList,
+    DiaryForm,
   },
   props: {},
   data() {
@@ -47,20 +56,43 @@ export default {
         type: '',
         isSave: false,
       },
-      editModal: {
+      modal: {
+        type: '',
         isVisible: false,
       },
     };
   },
+  computed: {
+    isSelectModal() {
+      return this.modal.type === 'moodList';
+    },
+    isDiaryForm() {
+      return this.modal.type === 'diaryForm';
+    },
+    modalTitle() {
+      return this.modal.type ? '오늘의 기분' : '오늘의 기록';
+    },
+  },
   methods: {
+    ...mapMutations(['setTodayMood']),
+    setTodayMood(value) {
+      this.todayMood.type = value;
+    },
+    openDiaryForm() {
+      this.modal.type = 'diaryForm';
+    },
     openModal() {
-      this.editModal.isVisible = true;
+      this.modal.type = 'moodList';
+      this.modal.isVisible = true;
     },
     closeModal() {
-      this.editModal.isVisible = false;
+      this.modal.isVisible = false;
     },
   },
 };
+
+export default app;
+
 </script>
 
 <style lang="scss">
